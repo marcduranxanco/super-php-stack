@@ -16,3 +16,18 @@ docker-compose run composer require --dev phpunit/phpunit
 docker-compose run php vendor/bin/phpunit
 docker-compose run phpunit --version
 ```
+
+Run phpunit tests
+```
+docker-compose run phpunit tests
+```
+
+Run phpunit tests
+```
+docker-compose up -d fpm nginx
+```
+
+Composer dump autoload
+```
+docker-compose run composer -- dump
+```
