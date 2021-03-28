@@ -19,7 +19,7 @@ docker-compose run phpunit --version
 
 Run phpunit tests
 ```
-docker-compose run phpunit tests
+docker-compose run --rm phpunit tests
 ```
 
 Run phpunit tests
