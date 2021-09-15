@@ -1,7 +1,20 @@
 # LARAVEL + MYSQL UNDER DOCKER
 
-## First run
-* run `make create` for create the laravel project
+# About this project
+This project is prepared to be executed with Docker. 
+It has a makefile that allows you to perform the main actions.
+
+## Make description
+- `make create`: creates the laravel project (under the laravel directory)
+- `make install`: install the dependencies 
+- `make up`: starts the docker containers
+- `make down`: stops the docker containers
+- `make dump`: run the composer -- dump
+- `make dumpo`: composer dump -o
+- `make php`: access to the php container
+- `make run`-tests: runs the project tests
+- `make robot`: starts the cli project
+
 
 
 ```
