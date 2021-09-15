@@ -1,33 +1,38 @@
 # docker-compose.yml
 version: '3'
 services:
+
   composer:
     image: composer:1.9.3
     environment:
       - COMPOSER_CACHE_DIR=/app/.cache/composer
     volumes:
       - .:/app
+
   php:
     image: php:8.0.3-cli
     volumes:
       - .:/app
     working_dir: /app
+
   phpunit:
     image: php:8.0.3-cli
     volumes:
       - .:/app
     working_dir: /app
     entrypoint: vendor/bin/phpunit
+
   fpm:
     image: php:8.0.3-fpm
     restart: always
     volumes:
       - .:/app
+
   nginx:
     image: nginx
     ports:
       - 8080:80
     volumes:
       - .:/app
-      - ./var/log/nginx:/var/log/nginx
-      - .conf/nginx/site.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/assets/nginx:/var/log/nginx
+      - ./docker/assets/nginx/site.conf:/etc/nginx/conf.d/default.conf

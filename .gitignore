@@ -1,5 +1,2 @@
-vendor/
-var/
-.cache/
-.phpunit.cache/
-.requests/
+docker/assets/nginx/*
+!docker/assets/nginx/conf
