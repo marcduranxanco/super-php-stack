@@ -20,7 +20,7 @@ services:
   phpunit:
     image: php:8.0.3-cli
     volumes:
-      - ../:/app
+      - ../laravel:/app
     working_dir: /app
     entrypoint: vendor/bin/phpunit
 

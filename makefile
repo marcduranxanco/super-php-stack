@@ -1,5 +1,5 @@
 create:
-	docker-compose -f ./docker/docker-compose.yml run --rm composer install
+	docker-compose -f ./docker/docker-compose.yml run --rm composer create-project laravel/laravel laravel
 
 install:
 	docker-compose -f ./docker/docker-compose.yml run --rm composer install

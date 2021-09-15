@@ -1,9 +1,11 @@
-# SUPER PHP STACK
-
-Documentation: https://thephp.website/en/issue/php-docker-quick-setup/
+# LARAVEL + MYSQL UNDER DOCKER
 
 ## First run
+* run `make create` for create the laravel project
+
+
 ```
+
 echo 'vendor/' >> .gitignore
 echo 'var/' >> .gitignore
 ```
