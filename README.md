@@ -17,15 +17,14 @@ It has a makefile that allows you to perform the main actions.
 DB_CONNECTION=mysql
 DB_HOST=mysql
 DB_PORT=3306
-DB_DATABASE=laravel
+DB_DATABASE=symfony
 DB_USERNAME=root
 DB_PASSWORD=Default-Root-Password
 ...
 ```
 
-
 ## Make description
-- `make create`: creates the laravel project (under the laravel directory)
+- `make create`: creates the symfony project (under the symfony directory)
 - `make install`: install the dependencies 
 - `make up`: starts the docker containers
 - `make down`: stops the docker containers
@@ -33,9 +32,6 @@ DB_PASSWORD=Default-Root-Password
 - `make dumpo`: composer dump -o
 - `make php`: access to the php container
 - `make run`-tests: runs the project tests
-- `make robot`: starts the cli project
-
-
 
 ```
 
@@ -43,7 +39,7 @@ echo 'vendor/' >> .gitignore
 echo 'var/' >> .gitignore
 ```
 
-# Main commands
+# Main docker-compose commands
 
 Add phpunit and test it
 ```
