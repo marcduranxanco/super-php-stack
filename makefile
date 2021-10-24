@@ -1,9 +1,12 @@
-projectName = testProject
+#!make
+include .env
+export $(shell sed 's/=.*//' .env)
+
 create:
-	docker-compose -f ./docker/docker-compose.yml run --rm composer create-project symfony/skeleton $(projectName)
+	docker-compose -f ./docker/docker-compose.yml run --rm composer create-project symfony/skeleton $(NAME_PROJECT)
 
 setup:
-	sudo chmod -R 777 symfony && docker-compose -f ./docker/docker-compose.yml exec nginx chmod -R 777 /app/$(projectName)/storage
+	sudo chmod -R 777 symfony && docker-compose -f ./docker/docker-compose.yml exec nginx chmod -R 777 /app/$(NAME_PROJECT)/storage
 
 install:
 	docker-compose -f ./docker/docker-compose.yml run --rm composer install
