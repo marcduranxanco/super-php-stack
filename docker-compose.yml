@@ -14,7 +14,7 @@ services:
     volumes:
       - ./app/${NAME_PROJECT}:/app
     ports:
-        - "${PHP_PORT}:9001"
+        - "${PHP_PORT}:9000"
     working_dir: /app
     links:
       - mysql
