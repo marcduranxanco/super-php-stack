@@ -3,28 +3,28 @@ include .env
 export $(shell sed 's/=.*//' .env)
 
 create:
-	docker-compose -f ./docker/docker-compose.yml run --rm composer create-project symfony/skeleton $(NAME_PROJECT)
+	docker-compose run --rm composer create-project symfony/skeleton $(NAME_PROJECT)
 
 setup:
-	sudo chmod -R 777 symfony && docker-compose -f ./docker/docker-compose.yml exec nginx chmod -R 777 /app/$(NAME_PROJECT)/storage
+	sudo chmod -R 777 symfony && docker-compose exec nginx chmod -R 777 /app/$(NAME_PROJECT)/storage
 
 install:
-	docker-compose -f ./docker/docker-compose.yml run --rm composer install
+	docker-compose run --rm composer install
 
 up:
-	docker-compose -f ./docker/docker-compose.yml up
+	docker-compose up
 
 down:
-	docker-compose -f ./docker/docker-compose.yml down
+	docker-compose down
 
 dump:
-	docker-compose -f ./docker/docker-compose.yml run --rm composer -- dump
+	docker-compose run --rm composer -- dump
 
 php:
-	docker-compose -f ./docker/docker-compose.yml run --rm php bash
+	docker-compose run --rm php bash
 
 phpunit:
-	docker-compose -f ./docker/docker-compose.yml run --rm phpunit tests
+	docker-compose run --rm phpunit tests
 
 composer:
-	docker-compose -f ./docker/docker-compose.yml run --rm composer $(command)
+	docker-compose run --rm composer $(command)

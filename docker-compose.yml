@@ -7,12 +7,12 @@ services:
     environment:
       - COMPOSER_CACHE_DIR=/app/.cache/composer
     volumes:
-      - ../laravel:/app
+      - /app/${NAME_PROJECT}:/app
 
   php:
     image: php:8.0.3-cli
     volumes:
-      - ../laravel:/app
+      - /app/${NAME_PROJECT}:/app
     working_dir: /app
     links:
       - mysql
@@ -20,7 +20,7 @@ services:
   phpunit:
     image: php:8.0.3-cli
     volumes:
-      - ../laravel:/app
+      - /app/${NAME_PROJECT}:/app
     working_dir: /app
     entrypoint: vendor/bin/phpunit
 
@@ -28,14 +28,14 @@ services:
     image: php:8.0.3-fpm
     restart: always
     volumes:
-      - ../laravel:/app
+      - /app/${NAME_PROJECT}:/app
 
   nginx:
     image: nginx
     ports:
       - 80:80
     volumes:
-      - ../laravel:/app
+      - /app/${NAME_PROJECT}:/app
       - ./nginx:/var/log/nginx
       - ./nginx/conf/site.conf:/etc/nginx/conf.d/default.conf
     links:
