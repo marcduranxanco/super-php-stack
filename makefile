@@ -6,7 +6,7 @@ create:
 	docker-compose run --rm composer create-project symfony/skeleton $(NAME_PROJECT)
 
 setup:
-	sudo chmod -R 777 symfony && docker-compose exec nginx chmod -R 777 /app/$(NAME_PROJECT)/storage
+	sudo chmod -R 777 /app/$(NAME_PROJECT) && docker-compose exec nginx chmod -R 777 /app/$(NAME_PROJECT)/storage
 
 install:
 	docker-compose run --rm composer install
