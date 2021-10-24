@@ -1,12 +1,15 @@
-# LARAVEL + MYSQL UNDER DOCKER
+# SYMFONY + MYSQL UNDER DOCKER
 
 # About this project
 This project is prepared to be executed with Docker. 
 It has a makefile that allows you to perform the main actions.
 
 ## Create a new project and first run
-- Merge the current branch to main `git merge --allow-unrelated-histories -s ours main && git checkout main && git merge docker-laravel-mysql && git branch -D docker-laravel-mysql`
+- Create the .env file from the .env.example
+- Set the project name on the file `\docker\nginx\conf\site.conf`
 - Create the project with `make create`
+
+- Merge the current branch to main `git merge --allow-unrelated-histories -s ours main && git checkout main && git merge docker-laravel-mysql && git branch -D docker-laravel-mysql`
 - Set up the project with `make setup` [WARNING] - This environtment is for development purposes. This command, makes unsafe environtment for security
 - Start the project `make up`
 
