@@ -7,7 +7,7 @@ services:
     environment:
       - COMPOSER_CACHE_DIR=/app/.cache/composer
     volumes:
-      - ./app/${NAME_PROJECT}:/app
+      - ./app:/app
 
   php:
     image: php:8.0.3-cli
