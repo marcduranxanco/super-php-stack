@@ -5,8 +5,9 @@ This project is prepared to be executed with Docker.
 It has a makefile that allows you to perform the main actions.
 
 ## Create a new project and first run
-- Create the .env file from the .env.example
+- Create the .env file from the .env.example and set the variables
 - Copy or create the project on the app folder (`composer create-project symfony/skeleton PROJECT_NAME`) or if you don't have composer in your system, you can use the composer container and makefile `make create` (it will use the PROJECT_NAME from .env)
+- Add the phpunit to the project: `composer require --dev phpunit/phpunit` and `composer install`
 - Merge the current branch to main `git merge --allow-unrelated-histories -s ours main && git checkout main && git merge docker-laravel-mysql && git branch -D docker-laravel-mysql`
 - Set up the project with `make setup` [WARNING] - This environtment is for development purposes. This command, makes unsafe environtment for security
 - Start the project `make up`
