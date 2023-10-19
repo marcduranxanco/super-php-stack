@@ -17,5 +17,5 @@ down:
 php:
 	docker-compose -f ./docker/docker-compose.yml run --rm php bash
 
-phpunit:
-	docker-compose -f ./docker/docker-compose.yml run --rm phpunit tests
+# phpunit:
+# 	docker-compose -f ./docker/docker-compose.yml run --rm phpunit tests

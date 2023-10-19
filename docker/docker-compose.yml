@@ -12,12 +12,12 @@ services:
     links:
       - mysql
 
-  phpunit:
-    image: php:8.0.3-cli
-    volumes:
-      - ../${NAME_PROJECT}:/app
-    working_dir: /app
-    entrypoint: vendor/bin/phpunit
+  # phpunit:
+  #   image: php:8.0.3-cli
+  #   volumes:
+  #     - ../${NAME_PROJECT}:/app
+  #   working_dir: /app
+  #   entrypoint: vendor/phpunit
 
   fpm:
     image: php:8.0.3-fpm
