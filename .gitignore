@@ -1,5 +1,5 @@
-docker/nginx/*
-!docker/nginx/conf
+docker/docker/nginx/*
+docker/docker/mysql/data
 docker/.cache
 .cache
 .env
