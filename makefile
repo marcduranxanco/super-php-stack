@@ -1,8 +1,12 @@
+#!make
+include .env
+export $(shell sed 's/=.*//' .env)
+
 create:
-	docker-compose -f ./docker/docker-compose.yml run --rm composer create-project laravel/laravel laravel
+	docker-compose -f ./docker/docker-compose.yml run --rm composer create-project laravel/laravel $(NAME_PROJECT)
 
 setup:
-	sudo chmod -R 777 laravel && docker-compose -f ./docker/docker-compose.yml exec nginx chmod -R 777 /app/laravel/storage
+	sudo chmod -R 777 /app/$(NAME_PROJECT) && docker-compose -f ./docker/docker-compose.yml exec nginx chmod -R 777 /app/$(NAME_PROJECT)/storage
 
 install:
 	docker-compose -f ./docker/docker-compose.yml run --rm composer install

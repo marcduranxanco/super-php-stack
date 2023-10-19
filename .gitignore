@@ -2,3 +2,4 @@ docker/nginx/*
 !docker/nginx/conf
 docker/.cache
 .cache
+.env
