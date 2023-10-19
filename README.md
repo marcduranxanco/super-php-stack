@@ -7,7 +7,7 @@ It has a makefile that allows you to perform the main actions.
 ## Create a new project and first run
 - Merge the current branch to main
   - `git checkout main`
-  - `git merge --allow-unrelated-histories docker-laravel-mysql`
+  - `git merge --allow-unrelated-histories origin/docker-mysql-frameworks`
   - If there are, resolve the conflicts
   - git commit
   - git push origin/main
