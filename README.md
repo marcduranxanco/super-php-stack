@@ -1,4 +1,4 @@
-# LARAVEL + MYSQL UNDER DOCKER
+# FRANEWORKS + MYSQL UNDER DOCKER
 
 # About this project
 This project is prepared to be executed with Docker. 
