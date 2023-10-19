@@ -15,10 +15,9 @@ It has a makefile that allows you to perform the main actions.
 
 - Create the .env file from the .env.example and set the variables (for the `project` and for `docker` variables)
 - Replace the environtment variables (note that NAME_PROJECT must be the same on all .env files)
-- Create the project in the root folter with:
+- Create the project in the root folter with the same name of the project name with:
   - Symfony: `composer create-project symfony/skeleton PROJECT_NAME`
   - Laravel: `composer create-project laravel/laravel PROJECT_NAME`
-- Add the phpunit to the project: `composer require --dev phpunit/phpunit` and `composer install`
 - Set up the project with `make setup` [WARNING] - This environtment is for development purposes. This command, makes unsafe environtment for security
 - Start the project `make up`
 
