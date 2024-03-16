@@ -12,7 +12,7 @@ down:
 	docker-compose down
 
 bash:
-	docker-compose run --rm php bash
+	docker-compose exec php bash
 
 tests:
-	docker-compose run --rm php tests
+	docker-compose exec php tests
