@@ -4,7 +4,6 @@
 This project is prepared to be executed with Docker. 
 It has a makefile that allows you to perform the main actions.
 
-# Instructions for initializing the project with Symfony
 ## Create a new project and first run
 - Merge the current branch to main
     ```
@@ -16,17 +15,6 @@ It has a makefile that allows you to perform the main actions.
 - Remove unused branches and 
 - Create the .env file from the .env.example and set the variables
 - Copy or create the project on the app folder
-```
-# Access to the container
-make bash
-
-# Install the project
-composer create-project symfony/skeleton:"7.0.*" .
-composer require webapp
-```
-
-- Set up the project with `make setup` [WARNING] - This environtment is for development purposes. This command, makes unsafe environtment for security
-- Start the project `make up`
 
 ## Update the database environtment variables
 ```
@@ -39,6 +27,19 @@ DB_USERNAME=root
 DB_PASSWORD=Default-Root-Password
 ...
 ```
+
+# Symfony installation
+```
+# Access to the container
+make bash
+
+# Install the project
+composer create-project symfony/skeleton:"7.0.*" .
+composer require webapp
+```
+
+- Set up the project with `make setup` [WARNING] - This environtment is for development purposes. This command, makes unsafe environtment for security
+- Start the project `make up`
 
 ## Make description
 - `make setup`: Set up the project. Apply 777 permissions on the storage project directory
