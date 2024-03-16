@@ -19,12 +19,11 @@ It has a makefile that allows you to perform the main actions.
 ## Update the database environtment variables
 ```
 ...
-DB_CONNECTION=mysql
-DB_HOST=mysql
-DB_PORT=3306
-DB_DATABASE=symfony
-DB_USERNAME=root
-DB_PASSWORD=Default-Root-Password
+MYSQL_PORT=3306
+MYSQL_ROOT_PASSWORD=root
+MYSQL_DATABASE=symfony
+MYSQL_USER=symfony
+MYSQL_PASSWORD=symfony
 ...
 ```
 
@@ -39,6 +38,7 @@ composer require webapp
 ```
 
 - Set up the project with `make setup` [WARNING] - This environtment is for development purposes. This command, makes unsafe environtment for security
+- Update de database conection in the .env project file: `DATABASE_URL="mysql://MYSQL_USER:MYSQL_PASSWORD@127.0.0.1:3306/MYSQL_DATABASE?serverVersion=5.7&charset=utf8mb4"`
 - Start the project `make up`
 
 ## Make description

@@ -3,7 +3,7 @@ include .env
 export $(shell sed 's/=.*//' .env)
 
 setup:
-	sudo chmod -R 777 /app/$(NAME_PROJECT) && docker compose exec nginx chmod -R 777 /app/$(NAME_PROJECT)/storage
+	sudo chmod -R 777 app/$(NAME_PROJECT)
 
 up:
 	docker-compose up -d
