@@ -7,10 +7,10 @@ It has a makefile that allows you to perform the main actions.
 ## Create a new project and first run
 - Merge the current branch to main
     ```
-    git checkout origin/docker-symfony-mysql
-    git merge --strategy=ours main #git merge --allow-unrelated-histories -s ours main
+    git switch docker-symfony-mysql
+    git merge --allow-unrelated-histories -s ours main #git merge --strategy=ours main
     git checkout main
-    git merge origin/docker-symfony-mysql
+    git merge docker-symfony-mysql
     ```
 - Remove unused branches and 
 - Create the .env file from the .env.example and set the variables
