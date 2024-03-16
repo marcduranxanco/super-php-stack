@@ -15,4 +15,4 @@ bash:
 	docker-compose exec php bash
 
 tests:
-	docker-compose exec php tests
+	docker-compose run php vendor/bin/phpunit tests

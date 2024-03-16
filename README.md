@@ -22,10 +22,9 @@ make bash
 
 # Install the project
 composer create-project symfony/skeleton:"7.0.*" .
-composer require webapp1
+composer require webapp
 ```
- (`composer create-project symfony/skeleton PROJECT_NAME`) or if you don't have composer in your system, you can use the composer container and makefile `make create` (it will use the PROJECT_NAME from .env)
-- Add the phpunit to the project: `composer require --dev phpunit/phpunit` and `composer install`
+
 - Set up the project with `make setup` [WARNING] - This environtment is for development purposes. This command, makes unsafe environtment for security
 - Start the project `make up`
 
@@ -52,22 +51,11 @@ DB_PASSWORD=Default-Root-Password
 
 Add phpunit and test it
 ```
-docker-compose run composer require --dev phpunit/phpunit
 docker-compose run php vendor/bin/phpunit
-docker-compose run phpunit --version
+docker-compose run php vendor/bin/phpunit --version
 ```
 
 Run phpunit tests
 ```
-docker-compose run --rm phpunit tests
-```
-
-Run phpunit tests
-```
-docker-compose up -d fpm nginx
-```
-
-Composer dump autoload
-```
-docker-compose run composer -- dump
+docker-compose run php vendor/bin/phpunit tests
 ```
