@@ -134,3 +134,127 @@ image: mysql:5.7
 * La base de datos se guarda en el volumen `db_data`, así que tus datos no se pierden al reiniciar los contenedores.
 
 ---
+
+### 🛠️ Problemas de permisos en entorno local
+
+El contenedor PHP usa un usuario genérico (appuser) con UID/GID personalizados para evitar problemas de permisos al compartir archivos con el sistema local. Esto permite editar los archivos generados dentro del contenedor desde tu máquina sin restricciones.
+
+Si no puedes editar los archivos generados dentro del contenedor desde tu máquina local, puede que el UID/GID del usuario del contenedor no coincida con el tuyo.
+
+#### ✅ Solución
+
+Modifica estas líneas en el `Dockerfile`:
+
+```dockerfile
+ARG USER_ID=1001
+ARG GROUP_ID=1001
+RUN groupadd -g ${GROUP_ID} appgroup \
+    && useradd -u ${USER_ID} -g ${GROUP_ID} -m appuser
+
+USER appuser
+```
+
+Obtén tu UID y GID local con:
+
+```bash
+id -u && id -g
+```
+
+Y reconstruye la imagen con:
+```bash
+docker-compose build --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) --no-cache
+```
+
+---
+
+
+<p align="center">
+  <a href="https://laravel.com" target="_blank">
+    <img src="https://laravel.com/img/logomark.min.svg" width="100" alt="Laravel Logo">
+  </a>
+</p>
+
+# Crear un nuevo proyecto Laravel desde cero
+
+
+1. **Accede al contenedor PHP:**
+
+   ```bash
+   docker exec -it php-fpm bash
+   ```
+
+2. **Ve a la carpeta donde está montado tu código:**
+
+   ```bash
+   cd /var/www/html
+   ```
+
+3. **Crea un nuevo proyecto Laravel:**
+
+   ```bash
+   composer create-project laravel/laravel .
+   ```
+
+   > El `.` al final indica que se instalará en la carpeta actual (`/var/www/html` → tu carpeta `src/` local).
+
+4. **Cambia permisos (si usas Linux o Docker con usuario distinto):**
+
+   ```bash
+   chown -R www-data:www-data storage bootstrap/cache
+   chmod -R 775 storage bootstrap/cache
+   ```
+
+5. **Sal del contenedor:**
+
+   ```bash
+   exit
+   ```
+
+6. **Accede a Laravel desde tu navegador:**
+   [http://localhost:8087](http://localhost:8087) ✅
+
+---
+
+## 🧩 Configurar `.env` para la base de datos
+
+En el archivo `src/.env`, ajusta las variables para usar el contenedor MySQL de tu `docker-compose`:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=db
+DB_PORT=3306
+DB_DATABASE=app
+DB_USERNAME=user
+DB_PASSWORD=secret
+```
+
+Luego ejecuta las migraciones dentro del contenedor PHP:
+
+```bash
+docker exec -it php-fpm php artisan migrate
+```
+
+---
+
+## 🧰 Comandos útiles dentro del contenedor
+
+* Ejecutar Artisan:
+
+  ```bash
+  docker exec -it php-fpm php artisan serve
+  ```
+
+  *(no necesario si ya usas Nginx)*
+
+* Instalar dependencias adicionales:
+
+  ```bash
+  docker exec -it php-fpm composer require laravel/breeze
+  ```
+
+* Ejecutar migraciones:
+
+  ```bash
+  docker exec -it php-fpm php artisan migrate
+  ```
+
