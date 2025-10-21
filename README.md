@@ -2,6 +2,28 @@
 
 Este proyecto proporciona un entorno **Dockerizado para PHP** pensado para crear proyectos de prueba, seguir cursos o desarrollar aplicaciones PHP (Symfony, Laravel, etc.) sin depender de las versiones instaladas en tu máquina local.
 
+### 🧱 Crear un nuevo proyecto desde esta base
+
+Para iniciar un proyecto nuevo sin modificar este repositorio:
+
+1. Clona el repositorio y elimina el historial de Git:
+
+   ```bash
+   git clone --depth=1 https://github.com/marcduranxanco/super-php-stack.git nombre-del-proyecto
+   cd nombre-del-proyecto
+   rm -rf .git
+   ```
+
+2. Inicializa un nuevo repositorio:
+
+   ```bash
+   git init
+   git remote add origin https://github.com/tu-usuario/nuevo-repo.git
+   git add .
+   git commit -m "Initial commit from super-php-stack base"
+   git push -u origin main
+   ```
+
 ---
 
 ## 🚀 Características
