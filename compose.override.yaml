@@ -1,0 +1,36 @@
+services:
+  php:
+    container_name: symfony_php
+    environment:
+      APP_ENV: dev
+      APP_DEBUG: "1"
+    volumes:
+      - ./:/app
+      - caddy_data_dev:/data
+      - caddy_config_dev:/config
+
+    ports:
+      - "80:80"
+      - "443:443"
+
+###> doctrine/doctrine-bundle ###
+  database:
+    ports:
+      - "5432"
+###< doctrine/doctrine-bundle ###
+
+###> symfony/mailer ###
+  mailer:
+    image: axllent/mailpit
+    ports:
+      - "1025"
+      - "8025"
+    environment:
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
+###< symfony/mailer ###
+
+volumes:
+  caddy_data_dev:
+  caddy_config_dev:
+  postgres_data_dev:

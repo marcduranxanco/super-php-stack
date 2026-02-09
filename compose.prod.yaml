@@ -1,0 +1,17 @@
+services:
+  php:
+    environment:
+      APP_ENV: prod
+      APP_DEBUG: "0"
+    volumes:
+      - ./:/app:ro
+    ports:
+      - "80:80"
+
+  database:
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports: []
+
+volumes:
+  pgdata:
