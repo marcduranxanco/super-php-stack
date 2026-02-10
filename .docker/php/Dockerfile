@@ -24,7 +24,6 @@ RUN mkdir -p /data/caddy/pki/authorities \
              /app/var/log && \
     chown -R www-data:www-data /data /config /app/var
 
-# Declarar volúmenes (esto le dice a Docker que preserve los permisos)
 VOLUME ["/data", "/config"]
 
 WORKDIR /app
@@ -32,6 +31,5 @@ WORKDIR /app
 COPY .docker/php/php.ini /usr/local/etc/php/conf.d/app.ini
 COPY .docker/php/frankenphp.conf /etc/frankenphp/conf.d/app.conf
 
-USER www-data
 
 EXPOSE 80
