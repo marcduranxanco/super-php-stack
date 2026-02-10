@@ -16,9 +16,120 @@ Este proyecto proporciona un **entorno Dockerizado** para desarrollar aplicacion
 
 ---
 
+# 🚀 Primera ejecución
+
+### 0️⃣ Configurar UID y GID
+
+Modificar en el archivo `.env` el **UID y GID del usuario local** que levantará el entorno Docker, para evitar problemas de permisos.
+
+Para obtenerlos:
+
+```bash
+id -u && id -g
+```
+
+### 1️⃣ Crear `.env.local`
+
+Crear un archivo `.env.local` con las variables específicas del entorno local:
+
+* Nombre del servidor
+* Conexión a la base de datos
+
+```env
+SERVER_NAME=localhost
+DATABASE_URL="postgresql://app:DB_SECRET@database:5432/app?serverVersion=16&charset=utf8"
+```
+
+> ⚠️ `.env.local` **no debe versionarse**
+
+### 2️⃣ Construir las imágenes
+
+```bash
+docker compose build --no-cache
+```
+
+### 3️⃣ Levantar los contenedores
+
+```bash
+make up
+```
+
+### 4️⃣ Instalar dependencias y preparar el proyecto
+
+Acceder al contenedor PHP:
+
+```bash
+make bash
+```
+
+Instalar dependencias PHP:
+
+```bash
+composer install
+```
+
+### 5️⃣ (Opcional) Verificar conexión a la base de datos
+
+```bash
+php bin/console dbal:run-sql "SELECT datname FROM pg_database;"
+```
+
+Con estos pasos, el entorno queda **listo para desarrollo** y accesible en: <https://localhost>
+
+---
+
+## 📦 Makefile (atajos útiles)
+
+El proyecto incluye un **Makefile** con comandos abreviados para facilitar tareas comunes durante el desarrollo.
+
+### Comandos disponibles
+
+```bash
+# Abrir bash dentro del contenedor PHP (como www-data)
+make bash
+
+# Levantar el entorno en segundo plano
+make up
+
+# Reiniciar servicios
+make restart
+
+# Detener servicios
+make stop
+
+# Ver logs de todos los contenedores
+make logs
+
+# Limpiar la caché de Symfony
+make cache-clear
+
+# Entrar en la base de datos PostgreSQL con psql
+make db
+
+# Ejecutar la suite de tests (PHPUnit)
+make test
+# Ejemplo filtrando un test concreto:
+make test ARGS="--filter ProductTest"
+
+### OTROS COMANDOS ÚTILES
+
+```bash
+# Reconstruir imágenes
+docker compose build --no-cache
+
+# Entrar al contenedor PHP
+docker compose exec php bash
+
+# Limpiar cache
+docker compose exec php bin/console cache:clear
+
+# Ver logs
+docker compose logs -f php
+```
+
+
 ## 🌱 Variables de entorno
 
-* Revisar los valores por defecto de las variables de entorno
 * Docker Compose **solo lee variables de los archivos `.env`**
 * Verificar si existen variables específicas de Docker en `.env.*`
 
@@ -55,20 +166,12 @@ docker compose build --no-cache
 ### Levantar el entorno
 
 ```bash
-docker compose up --build
+make up
 ```
 
-La aplicación estará disponible en:
-
-👉 <https://localhost>
+La aplicación estará disponible en: <https://localhost>
 
 ---
-
-### Instalar dependencias
-
-```bash
-docker compose exec php composer install
-```
 
 ### Caddyfile usado en desarrollo
 
@@ -90,7 +193,7 @@ Este archivo:
 *   De manera opcional, en desarrollo puedes usar un bind‑mount
 
 ⚠️ Recomendación  
-Nunca uses bind-mount de la base de datos en **producción**.
+Nunca usar bind-mount de la base de datos en **producción**.
 
 ---
 
@@ -159,52 +262,3 @@ frankenphp {
 👉 **No se debe versionar**
 
 ---
-
-## 📦 Makefile (atajos útiles)
-
-El proyecto incluye un **Makefile** con comandos abreviados para facilitar tareas comunes durante el desarrollo.
-
-### Comandos disponibles
-
-```bash
-# Abrir bash dentro del contenedor PHP (como www-data)
-make bash
-
-# Levantar el entorno en segundo plano
-make up
-
-# Reiniciar servicios
-make restart
-
-# Detener servicios
-make stop
-
-# Ver logs de todos los contenedores
-make logs
-
-# Limpiar la caché de Symfony
-make cache-clear
-
-# Entrar en la base de datos PostgreSQL con psql
-make db
-
-# Ejecutar la suite de tests (PHPUnit)
-make test
-# Ejemplo filtrando un test concreto:
-make test ARGS="--filter ProductTest"
-
-### OTROS COMANDOS ÚTILES
-
-```bash
-# Reconstruir imágenes
-docker compose build --no-cache
-
-# Entrar al contenedor PHP
-docker compose exec php bash
-
-# Limpiar cache
-docker compose exec php bin/console cache:clear
-
-# Ver logs
-docker compose logs -f php
-```
