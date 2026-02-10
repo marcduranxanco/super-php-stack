@@ -8,7 +8,9 @@ Este proyecto proporciona un **entorno Dockerizado** para desarrollar aplicacion
 
 * **Symfony** 7.4
 * **PHP** 8.4
-* **FrankenPHP** (modo worker)
+* **FrankenPHP**
+  *   `php_server` en desarrollo
+  *   `worker ./public/index.php` en producción
 * **PostgreSQL** 17
 * **Docker / Docker Compose**
 
@@ -58,7 +60,7 @@ docker compose up --build
 
 La aplicación estará disponible en:
 
-👉 [https://localhost](https://localhost)
+👉 <https://localhost>
 
 ---
 
@@ -68,19 +70,27 @@ La aplicación estará disponible en:
 docker compose exec php composer install
 ```
 
+### Caddyfile usado en desarrollo
+
+En desarrollo se monta:
+
+    .docker/php/caddy_dev.Caddyfile
+
+Este archivo:
+
+*   No usa workers
+*   Utiliza la directiva `php_server`
+*   Permite recarga automática sin reiniciar contenedores
+
 ---
 
-## 🐘 PostgreSQL
+## 🐘 PostgreSQL 17
 
-* Versión: **PostgreSQL 17**
-- Por defecto usa un **volumen Docker** (`database_data`)
+*   En desarrollo y producción utiliza **volumen Docker** (`database_data`)
+*   De manera opcional, en desarrollo puedes usar un bind‑mount
 
-Opcionalmente, puede usarse un **bind mount** para desarrollo.
-
-⚠️ **Importante**
-En producción **no** se debe usar bind mount para la base de datos.
-
-El archivo `docker-compose.prod.yml` ya está preparado para usar un volumen Docker (`pgdata`).
+⚠️ Recomendación  
+Nunca uses bind-mount de la base de datos en **producción**.
 
 ---
 
@@ -90,8 +100,8 @@ El mismo entorno puede reutilizarse para producción usando un override:
 
 ```bash
 docker compose \
-  -f docker-compose.yml \
-  -f docker-compose.prod.yml \
+  -f compose.yml \
+  -f compose.prod.yaml \
   up -d
 ```
 
@@ -103,17 +113,37 @@ docker compose \
 * FrankenPHP sigue en modo worker
 * Preparado para añadir HTTPS / reverse proxy
 
----
+### Caddyfile en producción
 
-## 🧠 FrankenPHP (modo worker)
+En producción se monta automáticamente:
 
-El proyecto usa FrankenPHP en modo worker:
+    .docker/php/caddy_prod.Caddyfile
 
-```env
-FRANKENPHP_CONFIG="worker ./public/index.php"
+Contiene la configuración del worker:
+
+```caddy
+frankenphp {
+    worker ./public/index.php
+}
 ```
 
-⚠️ En desarrollo puede ser necesario reiniciar el contenedor si se cambian configuraciones internas importantes.
+---
+
+## 🧠 FrankenPHP
+
+### En desarrollo
+
+*   Modo: **php\_server**
+*   No usa worker
+*   No cachea contenedor ni routing
+*   Refleja cambios al instante
+*   No son necesarios reinicios del contenedor
+
+### En producción
+
+*   Modo worker: **worker ./public/index.php**
+*   La aplicación permanece cargada en memoria
+*   Requiere reinicio de contenedor tras cambios estructurales (normal en prod)
 
 ---
 
