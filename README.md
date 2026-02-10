@@ -160,7 +160,40 @@ frankenphp {
 
 ---
 
-## 🧰 Comandos útiles
+## 📦 Makefile (atajos útiles)
+
+El proyecto incluye un **Makefile** con comandos abreviados para facilitar tareas comunes durante el desarrollo.
+
+### Comandos disponibles
+
+```bash
+# Abrir bash dentro del contenedor PHP (como www-data)
+make bash
+
+# Levantar el entorno en segundo plano
+make up
+
+# Reiniciar servicios
+make restart
+
+# Detener servicios
+make stop
+
+# Ver logs de todos los contenedores
+make logs
+
+# Limpiar la caché de Symfony
+make cache-clear
+
+# Entrar en la base de datos PostgreSQL con psql
+make db
+
+# Ejecutar la suite de tests (PHPUnit)
+make test
+# Ejemplo filtrando un test concreto:
+make test ARGS="--filter ProductTest"
+
+### OTROS COMANDOS ÚTILES
 
 ```bash
 # Reconstruir imágenes
