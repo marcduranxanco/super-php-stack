@@ -8,6 +8,7 @@ services:
       - ./:/app
       - caddy_data_dev:/data
       - caddy_config_dev:/config
+      - /.docker/php/caddy_dev.Caddy
 
     ports:
       - "80:80"

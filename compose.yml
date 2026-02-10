@@ -8,7 +8,6 @@ services:
         GID: ${GID:-1000}
     environment:
       SERVER_NAME: ${SERVER_NAME:-localhost}
-      FRANKENPHP_CONFIG: "worker ./public/index.php"
       PHP_DATE_TIMEZONE: ${PHP_DATE_TIMEZONE:-UTC}
     depends_on:
       - database

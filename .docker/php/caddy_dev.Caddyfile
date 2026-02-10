@@ -1,0 +1,10 @@
+{
+    frankenphp {
+        # No workers for dev
+    }
+}
+
+:443 {
+    root * /app/public
+    php_server
+}
