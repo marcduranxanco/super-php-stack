@@ -113,7 +113,6 @@ make test ARGS="--filter ProductTest"
 
 ### OTROS COMANDOS ÚTILES
 
-```bash
 # Reconstruir imágenes
 docker compose build --no-cache
 
