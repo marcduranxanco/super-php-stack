@@ -1,12 +1,6 @@
 # Symfony 7.4 + FrankenPHP + Docker
 
-Este proyecto es un **entorno Dockerizado** para trabajar con **Symfony 7.4** usando **FrankenPHP** como servidor de aplicaciones y **PostgreSQL 17** como base de datos.
-
-Está pensado para:
-
-* Desarrollo local cómodo (editar desde el host)
-* Rendimiento alto (FrankenPHP en modo worker)
-* Poder reutilizar la misma base para **producción**
+Este proyecto proporciona un **entorno Dockerizado** para desarrollar aplicaciones con **Symfony 7.4**, utilizando **FrankenPHP** como servidor de aplicaciones y **PostgreSQL 17** como base de datos.
 
 ---
 
@@ -20,78 +14,43 @@ Está pensado para:
 
 ---
 
-## 📁 Estructura del proyecto
-
-```txt
-.
-├── .docker/                 # Todo lo relacionado con Docker
-│   ├── php/
-│   │   ├── Dockerfile
-│   │   ├── php.ini
-│   │   └── frankenphp.conf
-│   └── postgres/
-│       └── data/            # Datos PostgreSQL (solo DEV)
-├── docker-compose.yml       # Base (dev)
-├── docker-compose.prod.yml  # Override producción
-├── .env                     # Variables por defecto
-├── .env.local               # Variables locales (NO versionadas)
-├── .editorconfig
-├── public/
-├── src/
-├── var/
-└── README.md
-```
-
----
-
 ## 🌱 Variables de entorno
 
-### `.env` (versionado)
+* Revisar los valores por defecto de las variables de entorno
+* Docker Compose **solo lee variables de los archivos `.env`**
+* Verificar si existen variables específicas de Docker en `.env.*`
 
-Contiene valores por defecto compartidos:
+Archivos relevantes:
 
-```env
-APP_ENV=dev
-APP_SECRET=ChangeMe
-
-DATABASE_URL="postgresql://app:secret@postgres:5432/app?serverVersion=17"
-
-SERVER_NAME=localhost
-PHP_DATE_TIMEZONE=Europe/Madrid
-```
-
----
-
-### `.env.local` (NO versionado)
-
-> ⚠️ Este archivo **no debe subirse a Git**
-
-Puedes crear uno desde un ejemplo:
-
-```bash
-cp .env.local.example .env.local
-```
+* `.env`
+  No debe contener variables sensibles ya que está versionado
+* `.env.local`
+  Uso local, **no versionar**
 
 ---
 
 ## 🐳 Docker y permisos (UID / GID)
 
-El contenedor PHP se ejecuta usando el **UID/GID del host**, para evitar problemas de permisos al editar archivos.
+El contenedor PHP se ejecuta usando el **UID/GID del host** para evitar problemas de permisos al editar archivos.
 
-Esto se controla mediante:
+Variables utilizadas:
 
 ```env
 UID=1001
 GID=1001
 ```
 
-Si cambias estos valores, debes reconstruir la imagen con `docker compose build --no-cache`
+Si se modifican estos valores, es necesario reconstruir la imagen:
+
+```bash
+docker compose build --no-cache
+```
 
 ---
 
 ## ▶️ Desarrollo local
 
-### 1️⃣ Levantar el entorno
+### Levantar el entorno
 
 ```bash
 docker compose up --build
@@ -99,11 +58,11 @@ docker compose up --build
 
 La aplicación estará disponible en:
 
-👉 [http://localhost:80](http://localhost:80)
+👉 [https://localhost](https://localhost)
 
 ---
 
-### 2️⃣ Instalar dependencias
+### Instalar dependencias
 
 ```bash
 docker compose exec php composer install
@@ -111,41 +70,23 @@ docker compose exec php composer install
 
 ---
 
-### 3️⃣ Crear la base de datos
-
-```bash
-docker compose exec php bin/console doctrine:database:create
-docker compose exec php bin/console doctrine:migrations:migrate
-```
-
----
-
-### 4️⃣ Trabajar normalmente
-
-* Editas archivos desde el editor local (VSCode, PHPStorm…)
-* Los cambios se reflejan al instante
-* FrankenPHP corre en **modo worker**
-
----
-
 ## 🐘 PostgreSQL
 
 * Versión: **PostgreSQL 17**
-* En desarrollo usa **bind mount**:
+- Por defecto usa un **volumen Docker** (`database_data`)
 
-  ```
-  .docker/postgres/data
-  ```
+Opcionalmente, puede usarse un **bind mount** para desarrollo.
 
-⚠️ **IMPORTANTE**
-En producción **NO** se debe usar bind mount para la base de datos.
-El `docker-compose.prod.yml` ya está preparado para usar un volumen Docker (`pgdata`).
+⚠️ **Importante**
+En producción **no** se debe usar bind mount para la base de datos.
+
+El archivo `docker-compose.prod.yml` ya está preparado para usar un volumen Docker (`pgdata`).
 
 ---
 
 ## 🚀 Producción
 
-Este entorno puede reutilizarse para producción usando el override.
+El mismo entorno puede reutilizarse para producción usando un override:
 
 ```bash
 docker compose \
@@ -172,13 +113,13 @@ El proyecto usa FrankenPHP en modo worker:
 FRANKENPHP_CONFIG="worker ./public/index.php"
 ```
 
-⚠️ En desarrollo puede ser necesario reiniciar el contenedor si cambian ciertas configuraciones profundas.
+⚠️ En desarrollo puede ser necesario reiniciar el contenedor si se cambian configuraciones internas importantes.
 
 ---
 
-## 📂 La carpeta `var/`
+## 📂 Carpeta `var/`
 
-`var/` contiene datos en tiempo de ejecución:
+`var/` contiene datos generados en tiempo de ejecución:
 
 * Cache (`var/cache/`)
 * Logs (`var/log/`)
@@ -189,26 +130,10 @@ FRANKENPHP_CONFIG="worker ./public/index.php"
 
 ---
 
-## 🧹 `.gitignore`
-
-Archivos importantes que **NO** se suben a Git:
-
-```gitignore
-.env.local
-.env.*.local
-.docker/postgres/data/
-var/cache/
-var/log/
-.idea/
-.vscode/
-```
-
----
-
 ## 🧰 Comandos útiles
 
 ```bash
-# 
+# Reconstruir imágenes
 docker compose build --no-cache
 
 # Entrar al contenedor PHP
