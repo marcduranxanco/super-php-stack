@@ -5,19 +5,19 @@ services:
       APP_ENV: dev
       APP_DEBUG: "1"
     volumes:
-      - ./:/app
+      - ../:/app
       - caddy_data_dev:/data
       - caddy_config_dev:/config
-      - /.docker/php/caddy_dev.Caddy
+      - /php/caddy_dev.Caddy
 
     ports:
-      - "80:80"
-      - "443:443"
+      - "${HTTP_PORT:-8081}:80"
+      - "${HTTPS_PORT:-8444}:443"
 
 ###> doctrine/doctrine-bundle ###
   database:
     ports:
-      - "5432:5432"
+      - "${DATABASE_PORT:-5432}:5432"
 ###< doctrine/doctrine-bundle ###
 
 ###> symfony/mailer ###

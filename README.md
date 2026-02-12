@@ -18,69 +18,60 @@ Este proyecto proporciona un **entorno Dockerizado** para desarrollar aplicacion
 
 # 🚀 Primera ejecución
 
-### 0️⃣ Configurar UID y GID
+### 1 - Generar los archivos `.env`
 
-Modificar en el archivo `.env` el **UID y GID del usuario local** que levantará el entorno Docker, para evitar problemas de permisos.
-
-Para obtenerlos:
+En la raíz del proyecto ejecuta:
 
 ```bash
-id -u && id -g
+make init-env
 ```
 
-### 1️⃣ Crear `.env.local`
+Este comando generará:
+- `.docker/.env`
+- `.env.local`
 
-Crear un archivo `.env.local` con las variables específicas del entorno local:
+⚠️ **Importante**: estos archivos NO deben versionarse.
 
-* Nombre del servidor
-* Conexión a la base de datos
+#### Revisar el archivo .docker/.env
 
+Ajusta las variables necesarias.
+
+Es importante indicar el **UID y GID del usuario local**, para evitar problemas de permisos con los archivos generados por Docker.
+Puedes obtenerlos así:: `id -u && id -g`
+
+#### Revisar el archivo `.env.local` para Symfony
+
+Ajusta las variables que correspondan. Por ejemplo:
 ```env
 SERVER_NAME=localhost
 DATABASE_URL="postgresql://app:DB_SECRET@database:5432/app?serverVersion=16&charset=utf8"
 ```
 
-> ⚠️ `.env.local` **no debe versionarse**
-
-### 2️⃣ Construir las imágenes
-
-```bash
-docker compose build --no-cache
-```
-
-### 3️⃣ Levantar los contenedores
-
-```bash
-make up
-```
-
-### 4️⃣ Instalar dependencias y preparar el proyecto
-
-Acceder al contenedor PHP:
-
-```bash
-make bash
-```
-
-Instalar dependencias PHP:
-
-```bash
-composer install
-```
-
-### 5️⃣ (Opcional) Verificar conexión a la base de datos
+### (Opcional) Verificar conexión a la base de datos
 
 ```bash
 php bin/console dbal:run-sql "SELECT datname FROM pg_database;"
 ```
 
-Con estos pasos, el entorno queda **listo para desarrollo** y accesible en: <https://localhost>
+Si todo está correcto, el entorno queda listo para desarrollo y accesible en: <https://localhost> (o el puerto HTTPS que hayas configurado).
+
+---
+
+## ▶️ Desarrollo local
+
+### Levantar el entorno
+
+```bash
+make up
+```
+
+La aplicación estará disponible en:  <https://localhost> (o el puerto HTTPS que hayas configurado).
 
 ---
 
 ## 📦 Makefile (atajos útiles)
 
-El proyecto incluye un **Makefile** con comandos abreviados para facilitar tareas comunes durante el desarrollo.
+El proyecto incluye un **Makefile**  con comandos abreviados para facilitar el desarrollo.
 
 ### Comandos disponibles
 
@@ -110,34 +101,7 @@ make db
 make test
 # Ejemplo filtrando un test concreto:
 make test ARGS="--filter ProductTest"
-
-### OTROS COMANDOS ÚTILES
-
-# Reconstruir imágenes
-docker compose build --no-cache
-
-# Entrar al contenedor PHP
-docker compose exec php bash
-
-# Limpiar cache
-docker compose exec php bin/console cache:clear
-
-# Ver logs
-docker compose logs -f php
 ```
-
-
-## 🌱 Variables de entorno
-
-* Docker Compose **solo lee variables de los archivos `.env`**
-* Verificar si existen variables específicas de Docker en `.env.*`
-
-Archivos relevantes:
-
-* `.env`
-  No debe contener variables sensibles ya que está versionado
-* `.env.local`
-  Uso local, **no versionar**
 
 ---
 
@@ -145,30 +109,13 @@ Archivos relevantes:
 
 El contenedor PHP se ejecuta usando el **UID/GID del host** para evitar problemas de permisos al editar archivos.
 
-Variables utilizadas:
-
+Las variables se setean en `.docker/.env`:
 ```env
 UID=1001
 GID=1001
 ```
 
-Si se modifican estos valores, es necesario reconstruir la imagen:
-
-```bash
-docker compose build --no-cache
-```
-
----
-
-## ▶️ Desarrollo local
-
-### Levantar el entorno
-
-```bash
-make up
-```
-
-La aplicación estará disponible en: <https://localhost>
+Si se modifican estos valores, es necesario reconstruir la imagen (`make build`).
 
 ---
 
@@ -180,7 +127,6 @@ En desarrollo se monta:
 
 Este archivo:
 
-*   No usa workers
 *   Utiliza la directiva `php_server`
 *   Permite recarga automática sin reiniciar contenedores
 
@@ -191,8 +137,7 @@ Este archivo:
 *   En desarrollo y producción utiliza **volumen Docker** (`database_data`)
 *   De manera opcional, en desarrollo puedes usar un bind‑mount
 
-⚠️ Recomendación  
-Nunca usar bind-mount de la base de datos en **producción**.
+⚠️ Nunca usar bind-mount de la base de datos en **producción**.
 
 ---
 

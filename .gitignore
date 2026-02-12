@@ -7,6 +7,7 @@
 /vendor/
 
 ### Docker ###
+.docker/.env
 .docker/postgres/data/
 docker-compose.override.yml
 

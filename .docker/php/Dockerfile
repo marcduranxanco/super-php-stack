@@ -28,8 +28,8 @@ VOLUME ["/data", "/config"]
 
 WORKDIR /app
 
-COPY .docker/php/php.ini /usr/local/etc/php/conf.d/app.ini
-COPY .docker/php/frankenphp.conf /etc/frankenphp/conf.d/app.conf
+COPY ./php/php.ini /usr/local/etc/php/conf.d/app.ini
+COPY ./php/frankenphp.conf /etc/frankenphp/conf.d/app.conf
 
 
 EXPOSE 80

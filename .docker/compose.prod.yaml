@@ -5,7 +5,7 @@ services:
       APP_DEBUG: "0"
     volumes:
       - ./:/app:ro
-      - /.docker/php/caddy_dev.Caddy
+      - ./php/caddy_dev.Caddy
     ports:
       - "80:80"
 
