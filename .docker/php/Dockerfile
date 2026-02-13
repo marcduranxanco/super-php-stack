@@ -31,6 +31,6 @@ WORKDIR /app
 
 COPY ./php/php.ini /usr/local/etc/php/conf.d/app.ini
 COPY ./php/frankenphp.conf /etc/frankenphp/conf.d/app.conf
-
+COPY ./php/xdebug.ini /usr/local/etc/php/conf.d/99-xdebug.ini
 
 EXPOSE 80
