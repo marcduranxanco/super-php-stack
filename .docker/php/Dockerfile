@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y \
         pdo_pgsql \
         opcache \
         zip \
+        xdebug \
     && rm -rf /var/lib/apt/lists/*
 
 # Ajuste de usuario www-data al UID/GID del host

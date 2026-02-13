@@ -119,6 +119,32 @@ Si se modifican estos valores, es necesario reconstruir la imagen (`make build`)
 
 ---
 
+## 🪲 Xdebug
+
+Este entorno incluye Xdebug 3, ya preinstalado y configurado para funcionar dentro del contenedor Docker.
+
+#### Variables de entorno
+
+Puedes modificar las variables de entorno (`./docker/.env`) a tu gusto:
+```dotenv
+XDEBUG_MODE=develop,debug  # o "off" para desactivarlo
+XDEBUG_CONFIG=client_host=host.docker.internal client_port=9003
+```
+
+#### Configuración para Phpstorm
+- Añadir Cli interpreter
+  - Settings / Php / CLI interpreter  (se puede seleecionar el Docker-composer.yml)
+- Nombrar Server como **Docker**
+  - Settings / Php / Servers
+
+#### En consola
+
+```bash
+XDEBUG_MODE=debug XDEBUG_SESSION=1 php bin/console about
+```
+
+---
+
 ### Caddyfile usado en desarrollo
 
 En desarrollo se monta:
