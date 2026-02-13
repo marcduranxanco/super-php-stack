@@ -21,6 +21,9 @@ EXEC_DB  = $(COMPOSE) exec $(DB_SVC)
 up:
 	$(COMPOSE) up -d
 
+stop:
+	$(COMPOSE) stop
+
 down:
 	$(COMPOSE) down -v
 
